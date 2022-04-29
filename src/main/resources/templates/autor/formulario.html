@@ -7,14 +7,14 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <form th:action="@{/autores/crear}" th:object="${autor}" method="post">
+                    <form th:action="@{/autores/__${action}__}" th:object="${autor}" method="post">
                         <input type="hidden" th:field="*{id}">
                         <div class="form-floating">
                             <input type="text" th:field="*{nombre}" class="form-control" id="nombre" placeholder="Juan Perez">
                             <label for="nombre">Nombre del autor</label>
                         </div>
 
-                        <button type="submit" class="btn btn-primary" th:text="Crear"></button>
+                        <button type="submit" class="btn btn-primary" th:text="${action == 'crear' ? 'Crear' : 'Actualizar'}"></button>
                     </form>
                 </div>
             </div>

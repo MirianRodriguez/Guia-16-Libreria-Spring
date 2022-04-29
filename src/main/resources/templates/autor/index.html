@@ -5,8 +5,35 @@
     <header th:replace="fragmentos/header :: header"></header>   
     <main>
         <div class="container">
-
-            <a th:href="@{/autores/formulario}" class="btn btn-primary">Crear</a>
+            <div class="row">
+                <div class="col">
+                    <a th:href="@{/autores/formulario}" class="btn btn-primary">Crear</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Actualizar</th>
+                            <th scope="col">Borrar</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr th:each="autor : ${autores}">
+                            <td scope="row" th:text="${autor.nombre}">nombrecito</td>
+                            <td><a th:href="@{/autores/formulario/__${autor.id}__}" class="btn btn-warning">Actualizar</a></td>
+                            <td>
+                                <form th:action="@{/autores/eliminar/__${autor.id}__}" method="POST">
+                                    <button class="btn btn-danger" type="submit">Eliminar</button>
+                                </form>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+            </div>
         </div>
     </main> 
     <footer th:insert="fragmentos/scripts :: scripts"></footer>

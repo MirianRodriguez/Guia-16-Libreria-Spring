@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,11 +28,11 @@ public class AutorController {
     @GetMapping
     public ModelAndView obtenerAutores(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("autor/index.html");
-        //Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 
-        //if (inputFlashMap != null) mav.addObject("exito", inputFlashMap.get("exito"));
+        if (inputFlashMap != null) mav.addObject("exito", inputFlashMap.get("exito"));
 
-        //mav.addObject("autores", autorServicio.obtenerTodos());
+        mav.addObject("autores", autorServicio.obtenerTodos());
 
         return mav;
     }
@@ -40,6 +41,7 @@ public class AutorController {
     public ModelAndView obtenerFormulario() {
         ModelAndView mav = new ModelAndView("autor/formulario.html");
         mav.addObject("autor", new Autor());
+        mav.addObject("action", "crear");
         return mav;        
     }
 
@@ -48,6 +50,29 @@ public class AutorController {
         RedirectView redireccion = new RedirectView("/autores");
         autorServicio.crear(autorDto);
         atributos.addFlashAttribute("exito", "El autor se ha almacenado");
+        return redireccion;
+    }
+
+    @GetMapping("/formulario/{id}")
+    public ModelAndView obtenerFormularioActualizar(@PathVariable Integer id) {
+        ModelAndView mav = new ModelAndView("autor/formulario");
+        mav.addObject("autor", autorServicio.obtenerPorId(id));
+        mav.addObject("action", "actualizar");
+        return mav;
+    }
+
+    @PostMapping("/actualizar")
+    public RedirectView actualizar(Autor autorDto, RedirectAttributes atributos) {
+        RedirectView redireccion = new RedirectView("/autores");
+        autorServicio.actualizar(autorDto);
+        atributos.addFlashAttribute("exito", "Se ha modificado el autor");
+        return redireccion;
+    }
+
+    @PostMapping("/eliminar/{id}")
+    public RedirectView eliminar(@PathVariable Integer id) {
+        RedirectView redireccion = new RedirectView("/autores");
+        autorServicio.eliminarPorId(id);
         return redireccion;
     }
 }
