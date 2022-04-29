@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragmentos/head :: head(Autores)"></head>
+<body>
+    <header th:replace="fragmentos/header :: header"></header>   
+    <main>
+        <div class="container">
+
+            <a th:href="@{/autores/formulario}" class="btn btn-primary">Crear</a>
+        </div>
+    </main> 
+    <footer th:insert="fragmentos/scripts :: scripts"></footer>
+</body>
+</html>

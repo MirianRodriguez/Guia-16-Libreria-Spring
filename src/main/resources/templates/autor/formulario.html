@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragmentos/head :: head('Formulario autores')"></head>
+<body>
+    <header th:replace="fragmentos/header :: header"></header>
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <form th:action="@{/autores/crear}" th:object="${autor}" method="post">
+                        <input type="hidden" th:field="*{id}">
+                        <div class="form-floating">
+                            <input type="text" th:field="*{nombre}" class="form-control" id="nombre" placeholder="Juan Perez">
+                            <label for="nombre">Nombre del autor</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" th:text="Crear"></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer th:insert="fragmentos/scripts :: scripts">
+
+    </footer>
+    <div ></div>
+</body>
+</html>
