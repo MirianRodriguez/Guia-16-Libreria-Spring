@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragmentos/head :: head(Autores)"></head>
+<head th:replace="fragmentos/head :: head(Editoriales)"></head>
 <body>
     <header th:replace="fragmentos/header :: header"></header>   
     <main>
         <div class="container">
           <div class="row mt-3">
             <div class="col lead">
-              Autores
+              Editoriales
             </div>
           </div>
             <div class="row mt-3 justify-content-end">
                 <div class="col-auto">
-                    <a th:href="@{/autores/formulario}" class="btn btn-primary">Crear</a>
+                    <a th:href="@{/editoriales/formulario}" class="btn btn-primary">Crear</a>
                 </div>
             </div>
             <div th:if="${exito}" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
@@ -30,11 +30,11 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr th:each="autor : ${autores}">
-                            <td scope="row" th:text="${autor.nombre}"></td>
-                            <td><a th:href="@{/autores/formulario/__${autor.id}__}" class="btn btn-warning">Actualizar</a></td>
+                          <tr th:each="editorial : ${editoriales}">
+                            <td scope="row" th:text="${editorial.nombre}">nombrecito</td>
+                            <td><a th:href="@{/editoriales/formulario/__${editorial.id}__}" class="btn btn-warning">Actualizar</a></td>
                             <td>
-                                <form th:action="@{/autores/eliminar/__${autor.id}__}" method="POST">
+                                <form th:action="@{/editoriales/eliminar/__${editorial.id}__}" method="POST">
                                     <button class="btn btn-danger" type="submit">Eliminar</button>
                                 </form>
                             </td>

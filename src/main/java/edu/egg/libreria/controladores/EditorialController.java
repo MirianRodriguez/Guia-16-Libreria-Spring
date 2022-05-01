@@ -15,65 +15,65 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
-import edu.egg.libreria.entidades.Autor;
-import edu.egg.libreria.servicios.AutorServicio;
+import edu.egg.libreria.entidades.Editorial;
+import edu.egg.libreria.servicios.EditorialServicio;
 
 @Controller
-@RequestMapping("/autores")
-public class AutorController {
-    
-    @Autowired
-    private AutorServicio autorServicio;
+@RequestMapping("/editoriales")
+public class EditorialController {
 
+    @Autowired
+    private EditorialServicio editorialServicio;
+    
     @GetMapping
-    public ModelAndView obtenerAutores(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("autor/index.html");
+    public ModelAndView obtenerEditoriales(HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView("editorial/index.html");
         Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (inputFlashMap != null) mav.addObject("exito", inputFlashMap.get("exito"));
 
-        mav.addObject("autores", autorServicio.obtenerTodos());
+        mav.addObject("editoriales", editorialServicio.obtenerTodos());
 
         return mav;
     }
 
     @GetMapping("/formulario")
     public ModelAndView obtenerFormulario() {
-        ModelAndView mav = new ModelAndView("autor/formulario.html");
-        mav.addObject("autor", new Autor());
+        ModelAndView mav = new ModelAndView("editorial/formulario.html");
+        mav.addObject("editorial", new Editorial());
         mav.addObject("action", "crear");
         return mav;        
     }
 
     @PostMapping("/crear")
-    public RedirectView crear(Autor autorDto, RedirectAttributes atributos) {
-        RedirectView redireccion = new RedirectView("/autores");
-        autorServicio.crear(autorDto);
-        atributos.addFlashAttribute("exito", "El autor se ha almacenado");
+    public RedirectView crear(Editorial editorialDto, RedirectAttributes atributos) {
+        RedirectView redireccion = new RedirectView("/editoriales");
+        editorialServicio.crear(editorialDto);
+        atributos.addFlashAttribute("exito", "La editorial se ha almacenado");
         return redireccion;
     }
 
     @GetMapping("/formulario/{id}")
     public ModelAndView obtenerFormularioActualizar(@PathVariable Integer id) {
-        ModelAndView mav = new ModelAndView("autor/formulario");
-        mav.addObject("autor", autorServicio.obtenerPorId(id));
+        ModelAndView mav = new ModelAndView("editorial/formulario");
+        mav.addObject("editorial", editorialServicio.obtenerPorId(id));
         mav.addObject("action", "actualizar");
         return mav;
     }
 
     @PostMapping("/actualizar")
-    public RedirectView actualizar(Autor autorDto, RedirectAttributes atributos) {
-        RedirectView redireccion = new RedirectView("/autores");
-        autorServicio.actualizar(autorDto);
-        atributos.addFlashAttribute("exito", "Se ha modificado el autor");
+    public RedirectView actualizar(Editorial editorialDto, RedirectAttributes atributos) {
+        RedirectView redireccion = new RedirectView("/editoriales");
+        editorialServicio.actualizar(editorialDto);
+        atributos.addFlashAttribute("exito", "Se ha modificado la editorial");
         return redireccion;
     }
 
     @PostMapping("/eliminar/{id}")
     public RedirectView eliminar(@PathVariable Integer id, RedirectAttributes atributos) {
-        RedirectView redireccion = new RedirectView("/autores");
-        autorServicio.eliminarPorId(id);
-        atributos.addFlashAttribute("exito", "Se ha eliminado el autor");
+        RedirectView redireccion = new RedirectView("/editoriales");
+        editorialServicio.eliminarPorId(id);
+        atributos.addFlashAttribute("exito", "Se ha eliminado la editorial");
         return redireccion;
     }
 }

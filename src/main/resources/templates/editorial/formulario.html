@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragmentos/head :: head('Formulario autores')"></head>
+<head th:replace="fragmentos/head :: head('Formulario editoriales')"></head>
 <body>
     <header th:replace="fragmentos/header :: header"></header>
     <main>
         <div class="container">
             <div class="row mt-3">
                 <div class="col">
-                    <form th:action="@{/autores/__${action}__}" th:object="${autor}" method="post">
+                    <form th:action="@{/editoriales/__${action}__}" th:object="${editorial}" method="post">
                         <input type="hidden" th:field="*{id}">
                         <div class="form-floating mt-3">
-                            <input type="text" th:field="*{nombre}" class="form-control" id="nombre" placeholder="Juan Perez">
-                            <label for="nombre">Nombre del autor</label>
+                            <input type="text" th:field="*{nombre}" class="form-control" id="nombre" placeholder="Kapeluz">
+                            <label for="nombre">Nombre de la editorial</label>
                         </div>
                         <div class="mt-3">
                             <button type="submit" class="btn btn-primary" th:text="${action == 'crear' ? 'Crear' : 'Actualizar'}"></button>
