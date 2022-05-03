@@ -21,7 +21,7 @@ public class Libro {
     private Integer id;
 
     @Column(name = "isbn", nullable = false)
-    private Long isbn;
+    private String isbn;
 
     @Column(name="titulo", length=50, nullable=false)
     private String titulo;
@@ -53,7 +53,7 @@ public class Libro {
         this.alta = true;
     }
 
-    public Libro(Integer id, Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
+    public Libro(Integer id, String isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
             Integer ejemplaresRestantes, Boolean alta, Autor autor, Editorial editorial) {
         this.id = id;
         this.isbn = isbn;
@@ -75,11 +75,11 @@ public class Libro {
         this.id = id;
     }
 
-    public Long getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Long isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 

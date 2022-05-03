@@ -10,7 +10,7 @@
                     <form th:action="@{/editoriales/__${action}__}" th:object="${editorial}" method="post">
                         <input type="hidden" th:field="*{id}">
                         <div class="form-floating mt-3">
-                            <input type="text" th:field="*{nombre}" class="form-control" id="nombre" placeholder="Kapeluz">
+                            <input type="text" th:field="*{nombre}" class="form-control" id="nombre">
                             <label for="nombre">Nombre de la editorial</label>
                         </div>
                         <div class="mt-3">

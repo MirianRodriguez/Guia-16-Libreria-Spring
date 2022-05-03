@@ -10,7 +10,7 @@
                     <form th:action="@{/autores/__${action}__}" th:object="${autor}" method="post">
                         <input type="hidden" th:field="*{id}">
                         <div class="form-floating mt-3">
-                            <input type="text" th:field="*{nombre}" class="form-control" id="nombre" placeholder="Juan Perez">
+                            <input type="text" th:field="*{nombre}" class="form-control" id="nombre">
                             <label for="nombre">Nombre del autor</label>
                         </div>
                         <div class="mt-3">

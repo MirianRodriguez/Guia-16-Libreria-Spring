@@ -1,41 +1,55 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragmentos/head :: head(Editoriales)"></head>
+<head th:replace="fragmentos/head :: head(Libros)"></head>
 <body>
     <header th:replace="fragmentos/header :: header"></header>   
     <main>
         <div class="container">
           <div class="row mt-3">
             <div class="col lead">
-              Editoriales
+              Libros
             </div>
           </div>
             <div class="row mt-3 justify-content-end">
                 <div class="col-auto">
-                    <a th:href="@{/editoriales/formulario}" class="btn btn-primary">Crear</a>
+                    <a th:href="@{/libros/formulario}" class="btn btn-primary">Crear</a>
                 </div>
             </div>
             <div th:if="${exito}" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
               <span th:text="${exito}"></span>
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <div th:if="${editoriales.isEmpty()}" class="alert alert-info mt-3" role="alert">No hay editoriales cargadas.</div>
-            <div th:unless="${editoriales.isEmpty()}" class="row mt-3">
+            <div th:if="${libros.isEmpty()}" class="alert alert-info mt-3" role="alert">No hay libros cargados.</div>
+            <div th:unless="${libros.isEmpty()}" class="row mt-3">
                 <div class="col">
-                    <table id="editoriales" class="display responsive nowrap w-100">
+                    <table id="libros" class="display responsive nowrap w-100">
                         <thead>
                           <tr>
-                            <th scope="col">Nombre</th>
+                            <th scope="col">ISBN</th>
+                            <th scope="col">Titulo</th>
+                            <th scope="col">Año</th>
+                            <th scope="col">Ejemplares</th>
+                            <th scope="col">Ejemplares prestados</th>
+                            <th scope="col">Ejemplares restantes</th>
+                            <th scope="col">Autor</th>
+                            <th scope="col">Editorial</th>
                             <th scope="col">Actualizar</th>
                             <th scope="col">Borrar</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr th:each="editorial : ${editoriales}">
-                            <td scope="row" th:text="${editorial.nombre}">nombrecito</td>
-                            <td><a th:href="@{/editoriales/formulario/__${editorial.id}__}" class="btn btn-warning">Actualizar</a></td>
+                          <tr th:each="libro : ${libros}">
+                            <td th:text="${libro.isbn}"></td>
+                            <td th:text="${libro.titulo}"></td>
+                            <td th:text="${libro.anio}"></td>
+                            <td th:text="${libro.ejemplares}"></td>
+                            <td th:text="${libro.ejemplaresPrestados}"></td>
+                            <td th:text="${libro.ejemplaresRestantes}"></td>
+                            <td th:text="${libro.autor.nombre}"></td>
+                            <td th:text="${libro.editorial.nombre}"></td>
+                            <td><a th:href="@{/libros/formulario/__${libro.id}__}" class="btn btn-warning">Actualizar</a></td>
                             <td>
-                                <form th:action="@{/editoriales/eliminar/__${editorial.id}__}" method="POST">
+                                <form th:action="@{/libros/eliminar/__${libro.id}__}" method="POST">
                                     <button class="btn btn-danger" type="submit">Eliminar</button>
                                 </form>
                             </td>
@@ -51,7 +65,7 @@
       $(document).ready(function() {
 
           /*tabla a la que se le va a aplicar los cambios*/
-          $('#editoriales').DataTable({
+          $('#libros').DataTable({
 
               aaSorting: [], /*para que se muestre en el mismo orden que viene del controlador*/
 
