@@ -44,11 +44,18 @@ public class LibroController {
     }
 
     @GetMapping("/formulario")
-    public ModelAndView obtenerFormulario() {
+    public ModelAndView obtenerFormulario(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("libro/formulario.html");
-        mav.addObject("libro", new Libro());
-        mav.addObject("autores", autorServicio.obtenerTodos());
-        mav.addObject("editoriales", editorialServicio.obtenerTodos());
+        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if(inputFlashMap != null){
+            mav.addObject("libro", inputFlashMap.get("libro"));
+            mav.addObject("error", inputFlashMap.get("error"));
+        }else{
+            mav.addObject("libro", new Libro());
+            mav.addObject("autores", autorServicio.obtenerTodos());
+            mav.addObject("editoriales", editorialServicio.obtenerTodos());
+        }
         mav.addObject("action", "crear");
         return mav;        
     }
@@ -56,8 +63,14 @@ public class LibroController {
     @PostMapping("/crear")
     public RedirectView crear(Libro libroDto, RedirectAttributes atributos) {
         RedirectView redireccion = new RedirectView("/libros");
-        libroServicio.crear(libroDto);
-        atributos.addFlashAttribute("exito", "El libro se ha almacenado");
+        try {          
+            libroServicio.crear(libroDto);
+            atributos.addFlashAttribute("exito", "El libro se ha almacenado");
+        } catch (IllegalArgumentException e) {
+            atributos.addFlashAttribute("libro", libroDto);
+            atributos.addFlashAttribute("error", e.getMessage());
+            redireccion.setUrl("/libros/formulario");
+        }
         return redireccion;
     }
 

@@ -6,10 +6,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name="editorial", indexes = {@Index(name = "idx_nombre", columnList = "nombre")})
+@SQLDelete(sql = "UPDATE editorial SET alta = false WHERE editorial_id = ?")
+@Where(clause = "alta = true")
 public class Editorial {
 
     @Id

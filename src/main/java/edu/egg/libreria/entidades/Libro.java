@@ -9,11 +9,17 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import static javax.persistence.GenerationType.IDENTITY;
 
 
 @Entity
 @Table(name = "libro", indexes = {@Index(name = "idx_titulo", columnList = "titulo")})
+@SQLDelete(sql = "UPDATE libro SET alta = false WHERE libro_id = ?")
+@Where(clause = "alta = true")
 public class Libro {
     @Id
     @GeneratedValue(strategy = IDENTITY)

@@ -17,6 +17,9 @@ public class AutorServicio {
 
     @Transactional
     public void crear(Autor autorDto) {
+        if (autorRepositorio.existsByNombre(autorDto.getNombre()))
+            throw new IllegalArgumentException("Ya existe un autor con ese nombre"); 
+
         Autor autor = new Autor();
 
         autor.setNombre(autorDto.getNombre());
@@ -44,7 +47,10 @@ public class AutorServicio {
     }
 
     @Transactional
-    public void eliminarPorId(Integer id) {
+    public void eliminarPorId(Integer id) throws Exception {
+        if(autorRepositorio.referenciasEnLibro(id)>0){
+            throw new Exception("No se puede eliminar porque hay registros asociados.");
+        }
         autorRepositorio.deleteById(id);
     }
     

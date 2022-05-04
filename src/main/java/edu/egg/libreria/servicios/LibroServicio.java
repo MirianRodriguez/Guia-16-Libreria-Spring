@@ -17,6 +17,13 @@ public class LibroServicio {
 
     @Transactional
     public void crear(Libro libroDto) {
+        if (libroRepositorio.existsByTitulo(libroDto.getTitulo())){
+            throw new IllegalArgumentException("Ya existe un libro con este titulo"); 
+        }
+        if  (libroRepositorio.existsByIsbn(libroDto.getIsbn())){
+            throw new IllegalArgumentException("Ya existe un libro con este isbn");
+        }
+
         Libro libro = new Libro();
 
         libro.setIsbn(libroDto.getIsbn());

@@ -17,6 +17,9 @@ public class EditorialServicio {
 
     @Transactional
     public void crear(Editorial editorialDto) {
+        if (editorialRepositorio.existsByNombre(editorialDto.getNombre()))
+            throw new IllegalArgumentException("Ya existe una editorial con ese nombre"); 
+            
         Editorial editorial = new Editorial();
 
         editorial.setNombre(editorialDto.getNombre());

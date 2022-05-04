@@ -38,9 +38,17 @@ public class EditorialController {
     }
 
     @GetMapping("/formulario")
-    public ModelAndView obtenerFormulario() {
+    public ModelAndView obtenerFormulario(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("editorial/formulario.html");
-        mav.addObject("editorial", new Editorial());
+        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (inputFlashMap != null){
+            mav.addObject("editorial", inputFlashMap.get("editorial"));
+            mav.addObject("error", inputFlashMap.get("error"));
+        }else{
+            mav.addObject("editorial", new Editorial());
+        }
+
         mav.addObject("action", "crear");
         return mav;        
     }
@@ -48,8 +56,14 @@ public class EditorialController {
     @PostMapping("/crear")
     public RedirectView crear(Editorial editorialDto, RedirectAttributes atributos) {
         RedirectView redireccion = new RedirectView("/editoriales");
-        editorialServicio.crear(editorialDto);
-        atributos.addFlashAttribute("exito", "La editorial se ha almacenado");
+        try {         
+            editorialServicio.crear(editorialDto);
+            atributos.addFlashAttribute("exito", "La editorial se ha almacenado");
+        } catch (IllegalArgumentException e) {
+            atributos.addFlashAttribute("editorial", editorialDto);
+            atributos.addFlashAttribute("error", e.getMessage());
+            redireccion.setUrl("/editoriales/formulario");
+        }
         return redireccion;
     }
 
