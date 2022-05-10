@@ -53,9 +53,9 @@ public class LibroController {
             mav.addObject("error", inputFlashMap.get("error"));
         }else{
             mav.addObject("libro", new Libro());
-            mav.addObject("autores", autorServicio.obtenerTodos());
-            mav.addObject("editoriales", editorialServicio.obtenerTodos());
         }
+        mav.addObject("autores", autorServicio.obtenerTodos());
+        mav.addObject("editoriales", editorialServicio.obtenerTodos());
         mav.addObject("action", "crear");
         return mav;        
     }

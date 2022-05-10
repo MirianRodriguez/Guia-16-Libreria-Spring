@@ -30,8 +30,15 @@ public class EditorialController {
         ModelAndView mav = new ModelAndView("editorial/index.html");
         Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 
-        if (inputFlashMap != null) mav.addObject("exito", inputFlashMap.get("exito"));
-
+        if (inputFlashMap != null) {
+            if(inputFlashMap.containsKey("exito")){
+                mav.addObject("exito", inputFlashMap.get("exito"));
+            }
+            if(inputFlashMap.containsKey("error")){
+                mav.addObject("error", inputFlashMap.get("error"));
+            }
+        }
+        
         mav.addObject("editoriales", editorialServicio.obtenerTodos());
 
         return mav;
@@ -86,8 +93,12 @@ public class EditorialController {
     @PostMapping("/eliminar/{id}")
     public RedirectView eliminar(@PathVariable Integer id, RedirectAttributes atributos) {
         RedirectView redireccion = new RedirectView("/editoriales");
-        editorialServicio.eliminarPorId(id);
-        atributos.addFlashAttribute("exito", "Se ha eliminado la editorial");
+        try {        
+            editorialServicio.eliminarPorId(id);
+            atributos.addFlashAttribute("exito", "Se ha eliminado la editorial");
+        } catch (Exception e) {
+            atributos.addFlashAttribute("error", e.getMessage());
+        }
         return redireccion;
     }
 }

@@ -19,7 +19,7 @@ public class EditorialServicio {
     public void crear(Editorial editorialDto) {
         if (editorialRepositorio.existsByNombre(editorialDto.getNombre()))
             throw new IllegalArgumentException("Ya existe una editorial con ese nombre"); 
-            
+
         Editorial editorial = new Editorial();
 
         editorial.setNombre(editorialDto.getNombre());
@@ -47,7 +47,10 @@ public class EditorialServicio {
     }
 
     @Transactional
-    public void eliminarPorId(Integer id) {
+    public void eliminarPorId(Integer id) throws Exception {
+        if(editorialRepositorio.referenciasEnLibro(id)>0){
+            throw new Exception("No se puede eliminar porque hay registros asociados.");
+        }
         editorialRepositorio.deleteById(id);
     }
     

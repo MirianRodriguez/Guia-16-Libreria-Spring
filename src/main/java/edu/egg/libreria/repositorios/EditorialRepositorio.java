@@ -23,4 +23,7 @@ public interface EditorialRepositorio extends JpaRepository<Editorial, Integer>{
     Optional<Editorial> findByNombre(String nombre);
 
     boolean existsByNombre(String nombre);
+
+    @Query(value = "SELECT count(*) FROM libro WHERE editorial_id = ?1 AND alta = 1", nativeQuery = true)
+    Integer referenciasEnLibro(Integer id);
 }
