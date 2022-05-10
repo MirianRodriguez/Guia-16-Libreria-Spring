@@ -24,15 +24,20 @@ public class Usuario {
     @Column(name = "alta", nullable = false)
     private boolean alta;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rol", referencedColumnName = "rol_id", nullable = false)
+    private Rol rol;
+
     public Usuario() {
         this.alta = true;
     }
 
-    public Usuario(Integer id, String email, String contrasenia, boolean alta) {
+    public Usuario(Integer id, String email, String contrasenia, boolean alta, Rol rol) {
         this.id = id;
         this.email = email;
         this.contrasenia = contrasenia;
         this.alta = alta;
+        this.rol = rol;
     }
 
     public Integer getId() {
@@ -67,11 +72,18 @@ public class Usuario {
         this.alta = alta;
     }
 
-    @Override
-    public String toString() {
-        return "Usuario [alta=" + alta + ", contrasenia=" + contrasenia + ", email=" + email + ", id=" + id + "]";
+    public Rol getRol() {
+        return rol;
     }
 
-    
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario [alta=" + alta + ", contrasenia=" + contrasenia + ", email=" + email + ", id=" + id + ", rol="
+                + rol + "]";
+    }
 
 }
