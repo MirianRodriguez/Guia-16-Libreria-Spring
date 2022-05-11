@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,7 @@ public class LibroController {
     @Autowired
     private EditorialServicio editorialServicio;
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping
     public ModelAndView obtenerLibros(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("libro/index.html");
@@ -43,6 +45,7 @@ public class LibroController {
         return mav;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/formulario")
     public ModelAndView obtenerFormulario(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("libro/formulario.html");
@@ -60,6 +63,7 @@ public class LibroController {
         return mav;        
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crear")
     public RedirectView crear(Libro libroDto, RedirectAttributes atributos) {
         RedirectView redireccion = new RedirectView("/libros");
@@ -74,6 +78,7 @@ public class LibroController {
         return redireccion;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/formulario/{id}")
     public ModelAndView obtenerFormularioActualizar(@PathVariable Integer id) {
         ModelAndView mav = new ModelAndView("libro/formulario");
@@ -84,6 +89,7 @@ public class LibroController {
         return mav;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/actualizar")
     public RedirectView actualizar(Libro libroDto, RedirectAttributes atributos) {
         RedirectView redireccion = new RedirectView("/libros");
@@ -92,6 +98,7 @@ public class LibroController {
         return redireccion;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/eliminar/{id}")
     public RedirectView eliminar(@PathVariable Integer id, RedirectAttributes atributos) {
         RedirectView redireccion = new RedirectView("/libros");

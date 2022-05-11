@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ public class EditorialController {
     @Autowired
     private EditorialServicio editorialServicio;
     
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping
     public ModelAndView obtenerEditoriales(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("editorial/index.html");
@@ -44,6 +46,7 @@ public class EditorialController {
         return mav;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/formulario")
     public ModelAndView obtenerFormulario(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("editorial/formulario.html");
@@ -60,6 +63,7 @@ public class EditorialController {
         return mav;        
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crear")
     public RedirectView crear(Editorial editorialDto, RedirectAttributes atributos) {
         RedirectView redireccion = new RedirectView("/editoriales");
@@ -74,6 +78,7 @@ public class EditorialController {
         return redireccion;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/formulario/{id}")
     public ModelAndView obtenerFormularioActualizar(@PathVariable Integer id) {
         ModelAndView mav = new ModelAndView("editorial/formulario");
@@ -82,6 +87,7 @@ public class EditorialController {
         return mav;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/actualizar")
     public RedirectView actualizar(Editorial editorialDto, RedirectAttributes atributos) {
         RedirectView redireccion = new RedirectView("/editoriales");
@@ -90,6 +96,7 @@ public class EditorialController {
         return redireccion;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/eliminar/{id}")
     public RedirectView eliminar(@PathVariable Integer id, RedirectAttributes atributos) {
         RedirectView redireccion = new RedirectView("/editoriales");
