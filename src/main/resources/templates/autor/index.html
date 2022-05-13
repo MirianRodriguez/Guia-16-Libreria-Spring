@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragmentos/head :: head(Autores)"></head>
-<body>
+<body class="d-flex flex-column h-100">
     <header th:replace="fragmentos/header :: header"></header>   
-    <main>
+    <main class="flex-shrink-0">
         <div class="container">
           <div class="row mt-3">
             <div class="col lead">
@@ -50,8 +50,8 @@
             </div>
         </div>
     </main> 
-    <footer th:insert="fragmentos/scripts :: scripts"></footer>
-
+    <div th:replace="fragmentos/scripts :: scripts"></div>
+    <footer th:replace="fragmentos/footer :: footer"></footer>
     <script>
         $(document).ready(function() {
 
