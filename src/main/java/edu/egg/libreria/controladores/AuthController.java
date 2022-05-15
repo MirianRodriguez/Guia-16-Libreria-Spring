@@ -15,6 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import edu.egg.libreria.entidades.Usuario;
 import edu.egg.libreria.servicios.UsuarioServicio;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.Map;
@@ -55,15 +56,18 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public RedirectView signup(Usuario userDto, RedirectAttributes attributes) {
+    public RedirectView signup(Usuario userDto, RedirectAttributes attributes, HttpServletRequest request) {
         RedirectView redirect = new RedirectView("/");
 
         try {
             usuarioServicio.create(userDto);
+            request.login(userDto.getEmail(), userDto.getContrasenia());
         } catch (IllegalArgumentException e) {
             attributes.addFlashAttribute("user", userDto);
             attributes.addFlashAttribute("exception", e.getMessage());
             redirect.setUrl("/auth/sign-up");
+        } catch (ServletException e) {
+            attributes.addFlashAttribute("exception","Error en el autolog");
         }
 
         return redirect;

@@ -30,6 +30,8 @@ public class UsuarioServicio implements UserDetailsService{
     private BCryptPasswordEncoder codificador;  
     @Autowired
     private RolRepositorio rolRepositorio;
+    @Autowired
+    private EmailServicio emailServicio;
 
 
     @Transactional
@@ -49,6 +51,8 @@ public class UsuarioServicio implements UserDetailsService{
                 usuario.setRol(rolRepositorio.findByNombre("USER").orElseThrow(() -> new IllegalArgumentException("Error al crear usuario")));
             }
         }
+
+        emailServicio.enviarBienvenida(usuarioDto.getEmail());
 
         usuarioRepositorio.save(usuario);
     }
