@@ -26,6 +26,9 @@ public class Autor {
     @Column(name="nombre", length=50, nullable=false)
     private String nombre;
 
+    @Column(name="imagen")
+    private String imagen;
+
     @Column(name="alta", nullable=false)
     private Boolean alta;
     
@@ -33,9 +36,10 @@ public class Autor {
         this.alta = true;
     }
 
-    public Autor(Integer id, String nombre, Boolean alta) {
+    public Autor(Integer id, String nombre, String imagen, Boolean alta) {
         this.id = id;
         this.nombre = nombre;
+        this.imagen = imagen;
         this.alta = alta;
     }
 
@@ -61,6 +65,14 @@ public class Autor {
 
     public void setAlta(Boolean alta) {
         this.alta = alta;
+    }
+    
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     @Override

@@ -29,6 +29,7 @@
                     <table id="autores" class="display responsive nowrap w-100">
                         <thead>
                           <tr>
+                            <th>Imagen</th>
                             <th scope="col">Nombre</th>
                             <th sec:authorize="hasRole('ADMIN')" scope="col">Actualizar</th>
                             <th sec:authorize="hasRole('ADMIN')" scope="col">Borrar</th>
@@ -36,6 +37,9 @@
                         </thead>
                         <tbody>
                           <tr th:each="autor : ${autores}">
+                            <td><img class="rounded-circle"
+                              th:src="${autor.imagen} ? @{/subidas/__${autor.imagen}__} : @{/subidas/default-image.png}"
+                              width="100" height="100"></td>
                             <td scope="row" th:text="${autor.nombre}"></td>
                             <td sec:authorize="hasRole('ADMIN')"><a th:href="@{/autores/formulario/__${autor.id}__}" class="btn btn-warning">Actualizar</a></td>
                             <td sec:authorize="hasRole('ADMIN')">
